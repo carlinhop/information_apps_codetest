@@ -95,7 +95,7 @@ class App extends Component {
                 <div className="form-group-lg">
 
                     <div className="col-md-6">
-                        <input type="text" name="name" placeholder="Name" className=" form-control" value={this.state.name}/>
+                        <input type="text" name="name" placeholder="Name" className=" form-control"/>
                         <i className="glyphicon glyphicon-user form-control-feedback"></i>
 
                     </div>
