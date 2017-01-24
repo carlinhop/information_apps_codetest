@@ -84,6 +84,12 @@ class App extends Component {
     };
 
 
+    check(e){
+        e.preventDefault();
+
+    }
+
+
   render() {
     return (
       <div className="App">
@@ -91,23 +97,24 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo"/>
         </div>
 
-          <div className="container">
+          <div className="container well">
 
               <div className="panel panel-default">
                   <h2>Checkout Form</h2>
               </div>
-            <form className="form" role="form">
+            <form className="form" role="form" onSubmit={this.check.bind(this)}>
 
                 <div className="form-group-lg">
 
                     <div className="col-md-6">
-                        <input type="text" name="name" placeholder="Name" className=" form-control"/>
+                        <input type="text" name="name" placeholder="Name" className=" form-control" required="true"/>
                         <i className="glyphicon glyphicon-user form-control-feedback"></i>
 
                     </div>
 
                     <div className="col-md-6">
-                        <input type="text" name="lastname" placeholder="Last Name" className="col-md-6 form-control"/>
+                        <input type="text" name="lastname" placeholder="Last Name" className="col-md-6 form-control"
+                               required="true"/>
                         <i className="glyphicon glyphicon-user form-control-feedback"></i>
 
                     </div>
@@ -115,11 +122,11 @@ class App extends Component {
 
                 <div className="form-group-lg ">
                     <div className="col-md-6">
-                        <input type="email" name="email" placeholder="E-mail" className="col-md-6 form-control"/>
+                        <input type="email" name="email" placeholder="E-mail" className="col-md-6 form-control" required="true"/>
                         <i className="glyphicon glyphicon-envelope form-control-feedback"></i>
                     </div>
                     <div className="col-md-6">
-                        <input type="tel" name="tel" placeholder="Phone" className="col-md-6 form-control"/>
+                        <input type="tel" name="tel" placeholder="Phone" className="col-md-6 form-control" required="true"/>
                         <i className="glyphicon glyphicon-earphone form-control-feedback"></i>
                     </div>
                 </div>
@@ -131,26 +138,27 @@ class App extends Component {
                         </select>
                     </div>
                     <div className="col-md-4">
-                        <input id="city" type="text" name="city" placeholder="City" className="col-md-4 form-control"/>
+                        <input id="city" type="text" name="city" placeholder="City" className="col-md-4 form-control" required="true"/>
                     </div>
                     <div className="col-md-2">
                         <input id="postcode"  type="text" name="postcode" placeholder="Post code" className="col-md-2 form-control"
-                                onChange={this.fillForm.bind(this)} onFocus={()=>{console.log("test")}}/>
+                                onChange={this.fillForm.bind(this)} required="true"/>
                     </div>
                 </div>
 
                 <div className="form-group-lg">
                     <div className="col-md-6">
-                        <input id="lat" type="number" name="lat" placeholder="Latitude" className="col-md-6 form-control"/>
+                        <input id="lat" type="number" step="any" name="lat" placeholder="Latitude" className="col-md-6 form-control"/>
                     </div>
                     <div className="col-md-6">
-                        <input id="lng" type="number" name="lng" placeholder="Longitude" className="col-md-6 form-control"/>
+                        <input id="lng" type="number" step="any" name="lng" placeholder="Longitude" className="col-md-6 form-control"/>
                     </div>
                 </div>
 
                 <div className="form-group-lg">
                     <div className="col-md-12">
-                        <input id="address" type="text" name="address" placeholder="Address" className="form-control"/>
+                        <input id="address" type="text" name="address" placeholder="Address" className="form-control"
+                               required="true"/>
                     </div>
                 </div>
 
@@ -159,7 +167,7 @@ class App extends Component {
                         <input type="text" name="additionalInfo" placeholder="Additional Information" className="form-control"/>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-default" >Send</button>
+                <button type="submit"  className="btn btn-default" >Send</button>
 
 
             </form>
