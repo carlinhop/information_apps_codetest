@@ -3,14 +3,17 @@ import logo from "./logo.svg";
 import "./App.css";
 import GoogleMapsLoader from "google-maps";
 
+
+let autocomplete;
 GoogleMapsLoader.LIBRARIES = ["geometry", "places"];
 GoogleMapsLoader.KEY = "AIzaSyCc3GjnrXBW2p637XJUP6wbPR8LoqXkaFo";
 GoogleMapsLoader.load(((google)=>{
-        console.log(google);
-        // new google.maps.places.Autocomplete(
-        //     (document.getElementById("autocomplete")),
-        //     {types: ["geocode"]});
-        //this.state.autocomplete.addListener("place_changed", ()=>{console.log("loaded")})
+
+         autocomplete = new google.maps.places.Autocomplete(
+            (document.getElementById("autocomplete")),
+            {types: ["geocode"]});
+
+
     })
 );
 
@@ -19,10 +22,12 @@ class App extends Component {
 
     constructor(props){
         super(props);
-        this.state = {name: ""}
+        this.state = {name: "", GoogleMapsLoader: GoogleMapsLoader, autocomplete: autocomplete};
+
     }
 
     geolocate(){
+        console.log(this);
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var geolocation = {
@@ -33,11 +38,11 @@ class App extends Component {
                     //     center: geolocation,
                     //     radius: position.coords.accuracy
                     // });
-                    // this.state.autocomplete.setBounds(circle.getBounds());
-                    console.log(geolocation);
-                });
+                    // autocomplete.setBounds(circle.getBounds());
+                    console.log(this.state);
+                }.bind(this));
             }
-    }
+    };
 
 
   render() {
@@ -91,7 +96,7 @@ class App extends Component {
                     </div>
                     <div className="col-md-2">
                         <input id="autocomplete"  type="text" name="postcode" placeholder="Post code" className="col-md-2 form-control"
-                               onChange={this.geolocate} onFocus={()=>{console.log("test")}}/>
+                               onChange={this.geolocate.bind(this)} onFocus={()=>{console.log("test")}}/>
                     </div>
                 </div>
 
