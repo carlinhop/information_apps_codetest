@@ -27,24 +27,25 @@ class App extends Component {
             })
         );
 
+    }
 
-
-
-
+    componentDidMount(){
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                let geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                }
+                let lat = document.getElementById("lat");
+                let lng = document.getElementById("lng");
+                lat.value = geolocation.lat;
+                lng.value = geolocation.lng;
+            }.bind(this));
+        }
     }
 
     geolocate(){
         console.log(this);
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    let geolocation = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    }
-                    let lat = document.getElementById("lat");
-                    let lng = document.getElementById("lng");
-                    lat.value = geolocation.lat;
-                    lng.value = geolocation.lng;
 
                     // let circle = new .maps.Circle({
                     //     center: geolocation,
@@ -55,8 +56,7 @@ class App extends Component {
                     // console.log(this.state.autocomplete);
                     // console.log(this.state.google);
 
-                }.bind(this));
-            }
+
     };
 
 
