@@ -42,8 +42,8 @@ class App extends Component {
     }
 
 
-    fillForm(e){
-        e.preventDefault();
+    fillForm(){
+
 
         let city = document.getElementById("city");
         let postcode = document.getElementById("postcode").value;
@@ -52,6 +52,7 @@ class App extends Component {
         country.innerHTML = "";
         let lat = document.getElementById("lat");
         let lng = document.getElementById("lng");
+
 
 
         let geocoder = new (this.state.google).maps.Geocoder();
@@ -86,7 +87,17 @@ class App extends Component {
 
     check(e){
         e.preventDefault();
+        let valids = []
+        let inputs = document.querySelectorAll("input");
+        inputs.forEach((input)=>{
+            if(input.checkValidity()){
+                valids.push(true)
+            }
 
+        });
+        if(valids.length == 10){
+            console.log("valid form");
+        }
     }
 
 
