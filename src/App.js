@@ -4,25 +4,32 @@ import "./App.css";
 import GoogleMapsLoader from "google-maps";
 
 
-let autocomplete;
+
 GoogleMapsLoader.LIBRARIES = ["geometry", "places"];
 GoogleMapsLoader.KEY = "AIzaSyCc3GjnrXBW2p637XJUP6wbPR8LoqXkaFo";
-GoogleMapsLoader.load(((google)=>{
 
-         autocomplete = new google.maps.places.Autocomplete(
-            (document.getElementById("autocomplete")),
-            {types: ["geocode"]});
-
-
-    })
-);
 
 
 class App extends Component {
 
     constructor(props){
         super(props);
-        this.state = {name: "", GoogleMapsLoader: GoogleMapsLoader, autocomplete: autocomplete};
+        this.state = {name: "", autocomplete: null, google: null};
+
+        GoogleMapsLoader.load(((google)=>{
+                this.setState({google: google});
+                let autocomplete = new google.maps.places.Autocomplete(
+                    (document.getElementById("autocomplete")),
+                    {types: ["geocode"]});
+                this.setState({autocomplete: autocomplete});
+
+
+            })
+        );
+
+
+
+
 
     }
 
@@ -30,16 +37,24 @@ class App extends Component {
         console.log(this);
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
-                    var geolocation = {
+                    let geolocation = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
-                    };
-                    // var circle = new google.maps.Circle({
+                    }
+                    let lat = document.getElementById("lat");
+                    let lng = document.getElementById("lng");
+                    lat.value = geolocation.lat;
+                    lng.value = geolocation.lng;
+
+                    // let circle = new .maps.Circle({
                     //     center: geolocation,
                     //     radius: position.coords.accuracy
                     // });
-                    // autocomplete.setBounds(circle.getBounds());
-                    console.log(this.state);
+                    // this.state.autocomplete.setBounds(circle.getBounds());
+                    // console.log(geolocation);
+                    // console.log(this.state.autocomplete);
+                    // console.log(this.state.google);
+
                 }.bind(this));
             }
     };
@@ -102,10 +117,10 @@ class App extends Component {
 
                 <div className="form-group-lg">
                     <div className="col-md-6">
-                        <input type="number" name="lat" placeholder="Latitude" className="col-md-6 form-control"/>
+                        <input id="lat" type="number" name="lat" placeholder="Latitude" className="col-md-6 form-control"/>
                     </div>
                     <div className="col-md-6">
-                        <input type="number" name="lng" placeholder="Longitude" className="col-md-6 form-control"/>
+                        <input id="lng" type="number" name="lng" placeholder="Longitude" className="col-md-6 form-control"/>
                     </div>
                 </div>
 
