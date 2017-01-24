@@ -1,19 +1,52 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import GoogleMapsLoader from "google-maps";
+
+GoogleMapsLoader.LIBRARIES = ["geometry", "places"];
+GoogleMapsLoader.KEY = "AIzaSyCc3GjnrXBW2p637XJUP6wbPR8LoqXkaFo";
+GoogleMapsLoader.load(((google)=>{
+        console.log(google);
+        // new google.maps.places.Autocomplete(
+        //     (document.getElementById("autocomplete")),
+        //     {types: ["geocode"]});
+        //this.state.autocomplete.addListener("place_changed", ()=>{console.log("loaded")})
+    })
+);
+
 
 class App extends Component {
 
     constructor(props){
         super(props);
-        this.state = {name: "",};
+        this.state = {name: ""}
     }
+
+    geolocate(){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    // var circle = new google.maps.Circle({
+                    //     center: geolocation,
+                    //     radius: position.coords.accuracy
+                    // });
+                    // this.state.autocomplete.setBounds(circle.getBounds());
+                    console.log(geolocation);
+                });
+            }
+    }
+
+
   render() {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo"/>
         </div>
+
           <div className="container">
 
               <div className="panel panel-default">
@@ -24,7 +57,7 @@ class App extends Component {
                 <div className="form-group-lg">
 
                     <div className="col-md-6">
-                        <input type="text" name="name" placeholder="Name" className=" form-control"/>
+                        <input type="text" name="name" placeholder="Name" className=" form-control" value={this.state.name}/>
                         <i className="glyphicon glyphicon-user form-control-feedback"></i>
 
                     </div>
@@ -57,7 +90,8 @@ class App extends Component {
                         <input type="text" name="city" placeholder="City" className="col-md-4 form-control"/>
                     </div>
                     <div className="col-md-2">
-                        <input type="text" name="postcode" placeholder="Post code" className="col-md-2 form-control"/>
+                        <input id="autocomplete"  type="text" name="postcode" placeholder="Post code" className="col-md-2 form-control"
+                               onChange={this.geolocate} onFocus={()=>{console.log("test")}}/>
                     </div>
                 </div>
 
