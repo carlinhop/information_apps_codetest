@@ -18,10 +18,8 @@ class App extends Component {
 
         GoogleMapsLoader.load(((google)=>{
                 this.setState({google: google});
-                let autocomplete = new google.maps.places.Autocomplete(
-                    (document.getElementById("autocomplete")),
-                    {types: ["geocode"]});
-                this.setState({autocomplete: autocomplete});
+
+                //this.setState({autocomplete: autocomplete});
 
 
             })
@@ -44,8 +42,19 @@ class App extends Component {
         }
     }
 
-    geolocate(){
-        console.log(this);
+    fillForm(e){
+        e.preventDefault();
+
+        let city = document.getElementById("city");
+        let postcode = document.getElementById("postcode").value;
+        let geocoder = new (this.state.google).maps.Geocoder();
+
+        geocoder.geocode({address: postcode}, (results)=>{
+            console.log(results);
+            city.value = results[0].address_components[2].short_name;
+        })
+
+
 
                     // let circle = new .maps.Circle({
                     //     center: geolocation,
@@ -107,11 +116,11 @@ class App extends Component {
                         </select>
                     </div>
                     <div className="col-md-4">
-                        <input type="text" name="city" placeholder="City" className="col-md-4 form-control"/>
+                        <input id="city" type="text" name="city" placeholder="City" className="col-md-4 form-control"/>
                     </div>
                     <div className="col-md-2">
-                        <input id="autocomplete"  type="text" name="postcode" placeholder="Post code" className="col-md-2 form-control"
-                               onChange={this.geolocate.bind(this)} onFocus={()=>{console.log("test")}}/>
+                        <input id="postcode"  type="text" name="postcode" placeholder="Post code" className="col-md-2 form-control"
+                                onChange={this.fillForm.bind(this)} onFocus={()=>{console.log("test")}}/>
                     </div>
                 </div>
 
@@ -135,7 +144,7 @@ class App extends Component {
                         <input type="text" name="additionalInfo" placeholder="Additional Information" className="form-control"/>
                     </div>
                 </div>
-                <button type="submit" className="btn btn-default">Send</button>
+                <button type="submit" className="btn btn-default" >Send</button>
 
 
             </form>
