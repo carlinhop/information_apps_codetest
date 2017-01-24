@@ -47,11 +47,16 @@ class App extends Component {
 
         let city = document.getElementById("city");
         let postcode = document.getElementById("postcode").value;
+        let country = document.getElementById("country");
+        let address = document.getElementById("address");
+
         let geocoder = new (this.state.google).maps.Geocoder();
 
         geocoder.geocode({address: postcode}, (results)=>{
             console.log(results);
-            city.value = results[0].address_components[2].short_name;
+            city.value = results[0].address_components[1].short_name;
+            country.value = results[0].address_components[4].long_name;
+            address.value = results[0].formatted_address;
         })
 
 
@@ -111,9 +116,9 @@ class App extends Component {
 
                 <div className="form-group-lg">
                     <div className="col-md-6">
-                        <select name="country" placeholder="Country" className="col-md-6 form-control">
-                            <option value="" selected>Country</option>
-                        </select>
+                        <input id="country" name="country" placeholder="Country" className="col-md-6 form-control">
+
+                        </input>
                     </div>
                     <div className="col-md-4">
                         <input id="city" type="text" name="city" placeholder="City" className="col-md-4 form-control"/>
@@ -135,7 +140,7 @@ class App extends Component {
 
                 <div className="form-group-lg">
                     <div className="col-md-12">
-                        <input type="text" name="address" placeholder="Address" className="form-control"/>
+                        <input id="address" type="text" name="address" placeholder="Address" className="form-control"/>
                     </div>
                 </div>
 
