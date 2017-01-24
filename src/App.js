@@ -28,19 +28,19 @@ class App extends Component {
     }
 
     componentDidMount(){
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                let geolocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                }
-                let lat = document.getElementById("lat");
-                let lng = document.getElementById("lng");
-                lat.value = geolocation.lat;
-                lng.value = geolocation.lng;
-            }.bind(this));
-        }
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition(function(position) {
+        //         let geolocation = {
+        //             lat: position.coords.latitude,
+        //             lng: position.coords.longitude
+        //         }
+        //         let lat = document.getElementById("lat");
+        //         let lng = document.getElementById("lng");
+        //         lat.value = geolocation.lat;
+        //         lng.value = geolocation.lng;
+        //     }.bind(this));
     }
+
 
     fillForm(e){
         e.preventDefault();
@@ -50,6 +50,9 @@ class App extends Component {
         let country = document.getElementById("country");
         let address = document.getElementById("address");
         country.innerHTML = "";
+        let lat = document.getElementById("lat");
+        let lng = document.getElementById("lng");
+
 
         let geocoder = new (this.state.google).maps.Geocoder();
 
@@ -61,6 +64,9 @@ class App extends Component {
             option.label = results[0].address_components[4].long_name;
             country.appendChild(option);
             address.value = results[0].formatted_address;
+            lat.value = results[0].geometry.location.lat();
+            lng.value = results[0].geometry.location.lng();
+
         })
 
 
